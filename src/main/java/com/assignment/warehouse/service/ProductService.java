@@ -46,7 +46,9 @@ public class ProductService {
 		List<Tuple> products = productRepository.fetchProducts();
 
 		List<ProductResponse> ListOfProduct = new ArrayList<>();
-		if(products.size()>0) {
+		if(products.size()==0) 
+			throw new WarehouseException("NO_CONTENT", "Product Not Availbele");
+		
 		Map<String, List<ProductResponseDTO>> productResponsedto = products.stream()
 				.map(t -> new ProductResponseDTO(t.get(0, String.class), t.get(1, String.class), t.get(2, String.class),
 						t.get(3, Integer.class).toString(), t.get(4, Integer.class).toString(), t.get(5, Integer.class),
@@ -74,8 +76,6 @@ public class ProductService {
 
 			ListOfProduct.add(productResponse);
 
-		}}else {
-			throw new WarehouseException("NO_CONTENT", "Product Not Availbele");
 		}
 		
 
